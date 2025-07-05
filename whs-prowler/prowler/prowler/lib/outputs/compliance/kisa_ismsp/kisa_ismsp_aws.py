@@ -4,6 +4,11 @@ from prowler.lib.outputs.compliance.compliance_output import ComplianceOutput
 from prowler.lib.outputs.compliance.kisa_ismsp.models import AWSKISAISMSPModel
 from prowler.lib.outputs.finding import Finding
 
+def _ensure_list(value: object):
+    """Return ``value`` as a list if it's not already one."""
+    if value is None or isinstance(value, list):
+        return value
+    return [value]
 
 class AWSKISAISMSP(ComplianceOutput):
     """
@@ -65,11 +70,7 @@ class AWSKISAISMSP(ComplianceOutput):
                             # list or a string in the compliance mapping. Cast
                             # them to a list to satisfy the model requirements.
                             Requirements_Attributes_Purpose=
-                                (
-                                    lambda v: [v]
-                                    if v is not None and not isinstance(v, list)
-                                    else v
-                                )(
+                                _ensure_list(
                                     getattr(
                                         check_context,
                                         "Purpose",
@@ -77,19 +78,13 @@ class AWSKISAISMSP(ComplianceOutput):
                                     )
                                 ),
                             Requirements_Attributes_ActionPlan=
-                                (
-                                    lambda v: [v]
-                                    if v is not None and not isinstance(v, list)
-                                    else v
-                                )(
+                                _ensure_list(
                                     getattr(
                                         check_context,
                                         "ActionPlan",
                                         attribute.ActionPlan,
                                     )
                                 ),
-                            Check_Purpose=getattr(check_context, "Purpose", None),
-                            Check_ActionPlan=getattr(check_context, "ActionPlan", None),
                             Requirements_Attributes_AuditChecklist=attribute.AuditChecklist,
                             Requirements_Attributes_RelatedRegulations=attribute.RelatedRegulations,
                             Requirements_Attributes_AuditEvidence=attribute.AuditEvidence,
@@ -119,17 +114,9 @@ class AWSKISAISMSP(ComplianceOutput):
                         Requirements_Attributes_Subdomain=attribute.Subdomain,
                         Requirements_Attributes_Section=attribute.Section,
                         Requirements_Attributes_Purpose=
-                            (
-                                lambda v: [v]
-                                if v is not None and not isinstance(v, list)
-                                else v
-                            )(attribute.Purpose),
+                            _ensure_list(attribute.Purpose),
                         Requirements_Attributes_ActionPlan=
-                            (
-                                lambda v: [v]
-                                if v is not None and not isinstance(v, list)
-                                else v
-                            )(attribute.ActionPlan),
+                            _ensure_list(attribute.ActionPlan),
                         Requirements_Attributes_AuditChecklist=attribute.AuditChecklist,
                         Requirements_Attributes_RelatedRegulations=attribute.RelatedRegulations,
                         Requirements_Attributes_AuditEvidence=attribute.AuditEvidence,

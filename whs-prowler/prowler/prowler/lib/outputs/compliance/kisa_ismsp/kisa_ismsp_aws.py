@@ -5,6 +5,13 @@ from prowler.lib.outputs.compliance.kisa_ismsp.models import AWSKISAISMSPModel
 from prowler.lib.outputs.finding import Finding
 
 
+def _ensure_list(value: object):
+    """Return ``value`` as a list if it's not already one."""
+    if value is None or isinstance(value, list):
+        return value
+    return [value]
+
+
 class AWSKISAISMSP(ComplianceOutput):
     """
     This class represents the AWS KISA-ISMS-P compliance output.
@@ -61,12 +68,25 @@ class AWSKISAISMSP(ComplianceOutput):
                             Requirements_Attributes_Domain=attribute.Domain,
                             Requirements_Attributes_Subdomain=attribute.Subdomain,
                             Requirements_Attributes_Section=attribute.Section,
-                            Requirements_Attributes_Purpose=getattr(
-                                check_context, "Purpose", attribute.Purpose
-                            ),
-                            Requirements_Attributes_ActionPlan=getattr(
-                                check_context, "ActionPlan", attribute.ActionPlan
-                            ),
+                            # Purpose and ActionPlan can be defined either as a
+                            # list or a string in the compliance mapping. Cast
+                            # them to a list to satisfy the model requirements.
+                            Requirements_Attributes_Purpose=
+                                _ensure_list(
+                                    getattr(
+                                        check_context,
+                                        "Purpose",
+                                        attribute.Purpose,
+                                    )
+                                ),
+                            Requirements_Attributes_ActionPlan=
+                                _ensure_list(
+                                    getattr(
+                                        check_context,
+                                        "ActionPlan",
+                                        attribute.ActionPlan,
+                                    )
+                                ),
                             Requirements_Attributes_AuditChecklist=attribute.AuditChecklist,
                             Requirements_Attributes_RelatedRegulations=attribute.RelatedRegulations,
                             Requirements_Attributes_AuditEvidence=attribute.AuditEvidence,
@@ -95,8 +115,10 @@ class AWSKISAISMSP(ComplianceOutput):
                         Requirements_Attributes_Domain=attribute.Domain,
                         Requirements_Attributes_Subdomain=attribute.Subdomain,
                         Requirements_Attributes_Section=attribute.Section,
-                        Requirements_Attributes_Purpose=attribute.Purpose,
-                        Requirements_Attributes_ActionPlan=attribute.ActionPlan,
+                        Requirements_Attributes_Purpose=
+                            _ensure_list(attribute.Purpose),
+                        Requirements_Attributes_ActionPlan=
+                            _ensure_list(attribute.ActionPlan),
                         Requirements_Attributes_AuditChecklist=attribute.AuditChecklist,
                         Requirements_Attributes_RelatedRegulations=attribute.RelatedRegulations,
                         Requirements_Attributes_AuditEvidence=attribute.AuditEvidence,

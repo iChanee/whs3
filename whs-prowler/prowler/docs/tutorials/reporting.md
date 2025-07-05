@@ -14,6 +14,35 @@ prowler <provider> --output-formats json-asff
 
 By default, all the compliance outputs will be generated when Prowler is executed. Compliance outputs will be placed inside the `/output/compliance` directory.
 
+### Per-check Purpose and Action Plan
+Compliance files can define custom descriptions for each check. Add an object inside the `Checks` array with `Id`, `Purpose` and `ActionPlan`. When that check is triggered, its own `Purpose` and `ActionPlan` are shown in the KISA ISMS-P report.
+
+```json title="kisa_isms_p_2023_korean_whs_edit.json"
+{
+  "Framework": "KISA-ISMS-P",
+  "Version": "2023-korean-whs",
+  "Provider": "AWS",
+  "Requirements": [
+    {
+      "Id": "2.5.4",
+      "Checks": [
+        {
+          "Id": "cognito_user_pool_self_registration_disabled",
+          "Purpose": "Cognito 사용자 풀에 대해 자체 등록이 비활성화되어 있는지 확인합니다.",
+          "ActionPlan": "Cognito 사용자 풀에 self registration이 활성화되어 있는지 확인"
+        }
+      ]
+    }
+  ]
+}
+```
+
+Run Prowler with your file:
+
+```console
+prowler <provider> --compliance kisa_isms_p_2023_korean_whs_edit.json
+```
+
 ## Custom Output Flags
 By default, Prowler creates a file inside the `output` directory named: `prowler-output-ACCOUNT_NUM-OUTPUT_DATE.format`.
 

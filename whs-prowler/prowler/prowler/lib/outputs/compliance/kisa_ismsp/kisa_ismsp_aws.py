@@ -61,12 +61,33 @@ class AWSKISAISMSP(ComplianceOutput):
                             Requirements_Attributes_Domain=attribute.Domain,
                             Requirements_Attributes_Subdomain=attribute.Subdomain,
                             Requirements_Attributes_Section=attribute.Section,
-                            Requirements_Attributes_Purpose=getattr(
-                                check_context, "Purpose", attribute.Purpose
-                            ),
-                            Requirements_Attributes_ActionPlan=getattr(
-                                check_context, "ActionPlan", attribute.ActionPlan
-                            ),
+                            # Purpose and ActionPlan can be defined either as a
+                            # list or a string in the compliance mapping. Cast
+                            # them to a list to satisfy the model requirements.
+                            Requirements_Attributes_Purpose=
+                                (
+                                    lambda v: [v]
+                                    if v is not None and not isinstance(v, list)
+                                    else v
+                                )(
+                                    getattr(
+                                        check_context,
+                                        "Purpose",
+                                        attribute.Purpose,
+                                    )
+                                ),
+                            Requirements_Attributes_ActionPlan=
+                                (
+                                    lambda v: [v]
+                                    if v is not None and not isinstance(v, list)
+                                    else v
+                                )(
+                                    getattr(
+                                        check_context,
+                                        "ActionPlan",
+                                        attribute.ActionPlan,
+                                    )
+                                ),
                             Check_Purpose=getattr(check_context, "Purpose", None),
                             Check_ActionPlan=getattr(check_context, "ActionPlan", None),
                             Requirements_Attributes_AuditChecklist=attribute.AuditChecklist,
@@ -97,8 +118,18 @@ class AWSKISAISMSP(ComplianceOutput):
                         Requirements_Attributes_Domain=attribute.Domain,
                         Requirements_Attributes_Subdomain=attribute.Subdomain,
                         Requirements_Attributes_Section=attribute.Section,
-                        Requirements_Attributes_Purpose=attribute.Purpose,
-                        Requirements_Attributes_ActionPlan=attribute.ActionPlan,
+                        Requirements_Attributes_Purpose=
+                            (
+                                lambda v: [v]
+                                if v is not None and not isinstance(v, list)
+                                else v
+                            )(attribute.Purpose),
+                        Requirements_Attributes_ActionPlan=
+                            (
+                                lambda v: [v]
+                                if v is not None and not isinstance(v, list)
+                                else v
+                            )(attribute.ActionPlan),
                         Requirements_Attributes_AuditChecklist=attribute.AuditChecklist,
                         Requirements_Attributes_RelatedRegulations=attribute.RelatedRegulations,
                         Requirements_Attributes_AuditEvidence=attribute.AuditEvidence,

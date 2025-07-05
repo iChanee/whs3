@@ -1,0 +1,102 @@
+{
+  "Framework": "KISA-ISMS-P",
+  "Version": "2023-korean(whs3_cloudguardian)",
+  "Provider": "AWS",
+  "Description": "ISMS-P 인증은 한국인터넷진흥원(KISA)이 제정한 정보보호 및 개인정보보호 관리체계를 기반으로, 독립적인 심사기관이 기업이나 조직의 보안 및 개인정보 보호 활동이 인증 기준을 충족하는지 평가한 후 인증을 부여하는 제도입니다. 이를 통해 기업과 기관은 제공하는 서비스에 대한 대중의 신뢰를 높이고, 점점 복잡해지는 사이버 위협에 효과적으로 대응할 수 있습니다. 또한, ISMS-P는 정보보호와 개인정보 보호를 체계적으로 수립하고 운영할 수 있는 포괄적인 지침을 제공합니다.",
+  "Requirements": [
+    {
+        "Id": "2.5.4",
+        "Name": "비밀번호 관리",
+        "Description": "법적 요구사항, 외부 위협요인 등을 고려하여 정보시스템 사용자 및 고객, 회원 등 정보주체(이용자)가 사용하는 비밀번호 관리절차를 수립·이행하여야 한다.",
+        "Checks": [
+            {
+            "Id": "cognito_user_pool_temporary_password_expiration",
+            "Purpose": "Cognito 사용자 풀의 임시 암호가 7일 이내에 만료되도록 설정되어 있는지 확인합니다.",
+            "ActionPlan": "Cognito 사용자 풀의 임시 암호가 7일 이내에 만료되도록 설정되어 있는지 확인"
+            },
+            {
+            "Id": "cognito_user_pool_password_policy_uppercase",
+            "Purpose": "Cognito 사용자 풀의 암호 정책이 최소 하나 이상의 대문자를 요구하는지 확인합니다.",
+            "ActionPlan": "Cognito 사용자 풀의 암호 정책이 최소 하나 이상의 대문자를 요구하는지 확인"
+            },
+            {
+            "Id": "cognito_user_pool_password_policy_number",
+            "Purpose": "Cognito 사용자 풀의 암호 정책이 최소 하나 이상의 숫자를 요구하는지 확인합니다.",
+            "ActionPlan": "Cognito 사용자 풀의 암호 정책이 최소 하나 이상의 숫자를 요구하는지 확인"
+            },
+            {
+            "Id": "cognito_user_pool_password_policy_lowercase",
+            "Purpose": "Cognito 사용자 풀의 암호 정책이 최소 하나 이상의 소문자를 요구하는지 확인합니다.",
+            "ActionPlan": "Cognito 사용자 풀의 암호 정책이 최소 하나 이상의 소문자를 요구하는지 확인"
+            },
+            {
+            "Id": "cognito_user_pool_password_policy_minimum_length_14",
+            "Purpose": "Cognito 사용자 풀의 암호 정책이 최소 14자 이상의 길이를 요구하는지 확인합니다.",
+            "ActionPlan": "Cognito 사용자 풀의 암호 정책이 최소 14자 이상의 길이를 요구하는지 확인"
+            },
+            {
+            "Id": "cognito_user_pool_password_policy_symbol",
+            "Purpose": "Cognito 사용자 풀의 암호 정책이 최소 하나 이상의 특수문자를 요구하는지 확인합니다.",
+            "ActionPlan": "Cognito 사용자 풀의 암호 정책이 최소 하나 이상의 특수문자를 요구하는지 확인"
+            },
+            {
+            "Id": "iam_password_policy_number",
+            "Purpose": "IAM 암호 정책이 최소 하나 이상의 숫자를 요구하는지 확인합니다.",
+            "ActionPlan": "IAM 암호 정책이 최소 하나 이상의 숫자를 요구하는지 확인"
+            },
+            {
+            "Id": "iam_password_policy_minimum_length_14",
+            "Purpose": "IAM 암호 정책이 최소 14자 이상의 길이를 요구하는지 확인합니다.",
+            "ActionPlan": "IAM 암호 정책이 최소 14자 이상의 길이를 요구하는지 확인"
+            },
+            {
+            "Id": "iam_password_policy_expires_passwords_within_90_days_or_less",
+            "Purpose": "IAM 암호 정책이 90일 이내에 만료되도록 설정되어 있는지 확인합니다.",
+            "ActionPlan": "IAM 암호 정책이 90일 이내에 만료되도록 설정되어 있는지 확인"
+            },
+            {
+            "Id": "iam_password_policy_symbol",
+            "Purpose": "IAM 암호 정책이 최소 하나 이상의 특수문자를 요구하는지 확인합니다.",
+            "ActionPlan": "IAM 암호 정책이 최소 하나 이상의 특수문자를 요구하는지 확인"
+            },
+            {
+            "Id": "iam_password_policy_reuse_24",
+            "Purpose": "IAM 암호 정책이 이전에 사용한 24개의 암호와 동일한 암호를 사용하지 못하게 하는지 확인합니다.",
+            "ActionPlan": "IAM 암호 정책이 이전에 사용한 24개의 암호와 동일한 암호를 사용하지 못하게 하는지 확인"
+            },
+            {
+            "Id": "iam_password_policy_lowercase",
+            "Purpose": "IAM 암호 정책이 최소 하나 이상의 소문자를 요구하는지 확인합니다.",
+            "ActionPlan": "IAM 암호 정책이 최소 하나 이상의 소문자를 요구하는지 확인"
+            },
+            {
+            "Id": "iam_password_policy_uppercase",
+            "Purpose": "IAM 암호 정책이 최소 하나 이상의 대문자를 요구하는지 확인합니다.",
+            "ActionPlan": "IAM 암호 정책이 최소 하나 이상의 대문자를 요구하는지 확인"
+            }
+        ],
+        "Attributes": [
+            {
+            "Domain": "2. 보호대책 요구사항",
+            "Subdomain": "2.5. 인증 및 권한관리",
+            "Section": "2.5.4 비밀번호 관리",
+            "AuditChecklist": [
+                "비밀번호 관리정책이 법적 요구사항 및 외부 위협을 반영하고 있는가?",
+                "비밀번호 복잡성, 길이, 교체 주기 등이 정책에 따라 관리되고 있는가?"
+            ],
+            "RelatedRegulations": [
+                "개인정보 보호법 제29조"
+            ],
+            "AuditEvidence": [
+                "비밀번호 정책",
+                "비밀번호 교체 내역"
+            ],
+            "NonComplianceCases": [
+                "비밀번호 복잡성 미흡",
+                "비밀번호 교체 주기 미준수"
+            ]
+            }
+        ]
+    }
+  ]
+}

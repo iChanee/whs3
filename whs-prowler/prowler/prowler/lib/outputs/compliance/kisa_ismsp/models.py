@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic.v1 import BaseModel, validator
+from pydantic.v1 import BaseModel
 
 
 class AWSKISAISMSPModel(BaseModel):
@@ -31,13 +31,3 @@ class AWSKISAISMSPModel(BaseModel):
     ResourceName: str
     CheckId: str
     Muted: bool
-
-    @validator(
-        "Requirements_Attributes_Purpose",
-        "Requirements_Attributes_ActionPlan",
-        pre=True,
-    )
-    def _ensure_list(cls, value):
-        if value is None or isinstance(value, list):
-            return value
-        return [value]

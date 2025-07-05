@@ -87,8 +87,6 @@ class AWSKISAISMSP(ComplianceOutput):
                                         attribute.ActionPlan,
                                     )
                                 ),
-                            Check_Purpose=getattr(check_context, "Purpose", None),
-                            Check_ActionPlan=getattr(check_context, "ActionPlan", None),
                             Requirements_Attributes_AuditChecklist=attribute.AuditChecklist,
                             Requirements_Attributes_RelatedRegulations=attribute.RelatedRegulations,
                             Requirements_Attributes_AuditEvidence=attribute.AuditEvidence,
